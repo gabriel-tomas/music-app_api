@@ -10,8 +10,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import { resolve } from 'path';
+
 import registerRoutes from './routes/registerRoutes';
 import loginRoutes from './routes/loginRoutes';
+import checkLoginRoutes from './routes/checkLoginRoutes';
 
 const whiteList = [
   process.env.WHITE_LIST_MAIN_URL,
@@ -71,6 +73,7 @@ class App {
   }
 
   routes() {
+    this.app.use('/checklogin', checkLoginRoutes);
     this.app.use('/register', registerRoutes);
     this.app.use('/login', loginRoutes);
   }
