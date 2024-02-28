@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcryptjs = require('bcryptjs');
 const UserSchema = require('./schemas/UserSchema');
+const PlaylistsSchema = require('./schemas/PlaylistsSchema');
 
 const UserModel = mongoose.model('users', UserSchema);
+const PlaylistsModel = mongoose.model('playlists', PlaylistsSchema);
 
 class Register {
   constructor(body) {
@@ -21,6 +23,7 @@ class Register {
     this.body.password = bcryptjs.hashSync(this.body.password, salt);
 
     this.user = await UserModel.create(this.body);
+    PlaylistsModel.create({ user_id: this.user.id });
   }
 
   async userExists() {

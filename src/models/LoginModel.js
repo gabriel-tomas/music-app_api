@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcryptjs = require('bcryptjs');
-const { get } = require('lodash');
 const UserSchema = require('./schemas/UserSchema');
+const PlaylistsSchema = require('./schemas/PlaylistsSchema');
 
 const UserModel = mongoose.model('users', UserSchema);
+const PlaylistsModel = mongoose.model('playlists', PlaylistsSchema);
 
 class Register {
   constructor(body) {
@@ -26,7 +27,9 @@ class Register {
     if (!bcryptjs.compareSync(this.body.password, this.user.password)) {
       this.errors.push('Senha incorreta');
       this.user = null;
+      return;
     }
+    PlaylistsModel.create({ user_id: this.user.id });
   }
 
   valid() {

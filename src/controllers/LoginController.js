@@ -10,6 +10,7 @@ class LoginController {
         return res.status(200).json({ errors: login.errors });
       }
       req.session.user = {
+        id: login.user.id,
         username: login.user.username,
         email: login.user.email,
         password: req.body.password.trim(),

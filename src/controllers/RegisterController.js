@@ -10,6 +10,7 @@ class RegisterController {
         return res.status(200).json({ errors: register.errors });
       }
       req.session.user = {
+        id: register.user.id,
         username: register.user.username,
         email: register.user.email,
         password: req.body.password.trim(),
