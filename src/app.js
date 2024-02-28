@@ -11,6 +11,7 @@ import helmet from 'helmet';
 
 import { resolve } from 'path';
 
+import playlistsRoutes from './routes/playlistsRoutes';
 import registerRoutes from './routes/registerRoutes';
 import loginRoutes from './routes/loginRoutes';
 import checkLoginRoutes from './routes/checkLoginRoutes';
@@ -76,6 +77,7 @@ class App {
     this.app.use('/checklogin', checkLoginRoutes);
     this.app.use('/register', registerRoutes);
     this.app.use('/login', loginRoutes);
+    this.app.use('/playlists', playlistsRoutes);
   }
 }
 
