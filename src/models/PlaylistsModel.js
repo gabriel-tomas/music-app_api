@@ -50,7 +50,7 @@ class Playlists {
     if (notSent) return;
     this.cleanUp();
 
-    if (this.body.playlistName.length < 3 || this.body.playlistName.length > 24) this.errors.push('Nome da playlist deve conter entre 1 e 120 caracteres');
+    if (this.body.playlistName.length < 1 || this.body.playlistName.length > 120) this.errors.push('Nome da playlist deve conter entre 1 e 120 caracteres');
   }
 
   cleanUp() {
