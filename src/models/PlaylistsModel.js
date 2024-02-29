@@ -73,6 +73,7 @@ class Playlists {
       this.errors.push('Playlist não encontrada');
     }
     if (this.errors.length > 0) return;
+    // to do 
   }
 
   checkTrackExistence(trackId, playlistName, searchObj) {
