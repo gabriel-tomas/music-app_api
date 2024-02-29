@@ -7,7 +7,7 @@ class LoginController {
       await login.login();
       if (login.errors.length > 0) {
         req.session.save();
-        return res.status(200).json({ errors: login.errors });
+        return res.status(200).json({ loggedIn: false, errors: login.errors });
       }
       req.session.user = {
         id: login.user.id,
@@ -16,10 +16,11 @@ class LoginController {
         password: req.body.password.trim(),
       };
       req.session.save();
-      return res.json({ success: 'Logado com sucesso' });
+      return res.json({ loggedIn: true, success: 'Logado com sucesso' });
     } catch (e) {
       console.log(e);
       return res.status(401).json({
+        loggedIn: false,
         errors: [
           'Ocorreu um erro ao tentar se registrar',
         ],

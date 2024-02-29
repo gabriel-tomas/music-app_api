@@ -23,9 +23,22 @@ class Playlists {
     const { playlists } = this.playlists;
 
     const newPlaylist = { ...playlists };
-    newPlaylist[this.body.playlistName] = [];
+    this.checkPlaylistExistence(this.body.playlistName, newPlaylist);
+    if (this.errors.length > 0) return;
 
+    newPlaylist[this.body.playlistName] = [];
     await this.saveChanges({ ...newPlaylist });
+  }
+
+  async checkPlaylistExistence(playlistName, searchObj) {
+    const keys = Object.keys(searchObj);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i] === playlistName) {
+        this.errors.push('Playlist já existe');
+        return true;
+      }
+    }
+    return false;
   }
 
   async getPlaylists() {

@@ -7,7 +7,7 @@ class RegisterController {
       await register.create();
       if (register.errors.length > 0) {
         req.session.save();
-        return res.status(200).json({ errors: register.errors });
+        return res.status(200).json({ loggedIn: false, errors: register.errors });
       }
       req.session.user = {
         id: register.user.id,
@@ -16,7 +16,7 @@ class RegisterController {
         password: req.body.password.trim(),
       };
       req.session.save();
-      return res.json({ success: 'Usuário criado com sucesso' });
+      return res.json({ loggedIn: true, success: 'Usuário criado com sucesso' });
     } catch (e) {
       console.log(e);
       return res.status(401).json({
