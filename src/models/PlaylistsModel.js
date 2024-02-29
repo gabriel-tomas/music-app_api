@@ -17,24 +17,67 @@ class Playlists {
     if (this.errors.length > 0) return;
 
     await this.getPlaylists();
-    if (!this.playlists) {
+    /*     if (!this.playlists) {
       this.errors.push('Playlist não encontrada');
-    }
+    } */
     const { playlists } = this.playlists;
 
-    const newPlaylist = { ...playlists };
-    this.checkPlaylistExistence(this.body.playlistName, newPlaylist);
+    const newPlaylists = { ...playlists };
+    if (this.checkPlaylistExistence(this.body.playlistName, { ...newPlaylists })) {
+      this.errors.push('Playlist já existe');
+    }
     if (this.errors.length > 0) return;
 
-    newPlaylist[this.body.playlistName] = [];
-    await this.saveChanges({ ...newPlaylist });
+    newPlaylists[this.body.playlistName] = [];
+    await this.saveChanges({ ...newPlaylists });
   }
 
-  async checkPlaylistExistence(playlistName, searchObj) {
+  async addTrackToPlaylist(track, playlistName) {
+    if (!track) {
+      this.errors.push('Musica deve ser enviada');
+      return;
+    }
+    if (!playlistName) {
+      this.errors.push('Nome da playlist deve ser enviado');
+      return;
+    }
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+    if (!this.checkPlaylistExistence(playlistName, playlists)) {
+      this.errors.push('Playlist não encontrada');
+    }
+    if (this.errors.length > 0) return;
+
+    const newPlaylists = { ...playlists };
+    if (this.checkTrackExistence(track.id, playlistName, { ...newPlaylists })) {
+      this.errors.push('Música já adicionada');
+      return;
+    }
+    newPlaylists[playlistName].push(track);
+
+    await this.saveChanges(newPlaylists);
+  }
+
+  checkTrackExistence(trackId, playlistName, searchObj) {
+    let existTrack = false;
     const keys = Object.keys(searchObj);
     for (let i = 0; i < keys.length; i += 1) {
       if (keys[i] === playlistName) {
-        this.errors.push('Playlist já existe');
+        // eslint-disable-next-line no-loop-func
+        searchObj[keys[i]].forEach((itemTrackPlaylist) => {
+          if (itemTrackPlaylist.id === trackId) {
+            existTrack = true;
+          }
+        });
+      }
+    }
+    return existTrack;
+  }
+
+  checkPlaylistExistence(playlistName, searchObj) {
+    const keys = Object.keys(searchObj);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (keys[i] === playlistName) {
         return true;
       }
     }
