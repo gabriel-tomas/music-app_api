@@ -58,6 +58,23 @@ class Playlists {
     await this.saveChanges(newPlaylists);
   }
 
+  async removeTrackFromPlaylist(trackId, playlistName) {
+    if (!trackId) {
+      this.errors.push('ID da musica deve ser enviada');
+      return;
+    }
+    if (!playlistName) {
+      this.errors.push('Nome da playlist deve ser enviado');
+      return;
+    }
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+    if (!this.checkPlaylistExistence(playlistName, playlists)) {
+      this.errors.push('Playlist não encontrada');
+    }
+    if (this.errors.length > 0) return;
+  }
+
   checkTrackExistence(trackId, playlistName, searchObj) {
     let existTrack = false;
     const keys = Object.keys(searchObj);
