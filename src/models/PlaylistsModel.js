@@ -29,6 +29,25 @@ class Playlists {
     await this.saveChanges({ ...newPlaylists });
   }
 
+  async deletePlaylist(body) {
+    this.body = body;
+    this.valid();
+    if (this.errors.length > 0) return;
+
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+
+    const newPlaylists = { ...playlists };
+    if (!this.checkPlaylistExistence(this.body.playlistName, { ...newPlaylists })) {
+      this.errors.push('Playlist não encontrada');
+    }
+    if (this.errors.length > 0) return;
+
+    delete newPlaylists[this.body.playlistName];
+
+    await this.saveChanges({ ...newPlaylists });
+  }
+
   async addTrackToPlaylist(track, playlistName) {
     let notSent = false;
     if (!track) {
@@ -58,7 +77,7 @@ class Playlists {
     }
     newPlaylists[playlistName].push(track);
 
-    await this.saveChanges(newPlaylists);
+    await this.saveChanges({ ...newPlaylists });
   }
 
   async removeTrackFromPlaylist(trackId, playlistName) {
@@ -102,7 +121,7 @@ class Playlists {
 
     newPlaylists[playlistName] = removeObjectFromArray(newPlaylists[playlistName], 'id', trackId);
 
-    await this.saveChanges(newPlaylists);
+    await this.saveChanges({ ...newPlaylists });
   }
 
   checkTrackExistence(trackId, playlistName, searchObj) {
