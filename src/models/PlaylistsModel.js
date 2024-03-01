@@ -17,9 +17,6 @@ class Playlists {
     if (this.errors.length > 0) return;
 
     await this.getPlaylists();
-    /*     if (!this.playlists) {
-      this.errors.push('Playlist não encontrada');
-    } */
     const { playlists } = this.playlists;
 
     const newPlaylists = { ...playlists };
@@ -33,14 +30,20 @@ class Playlists {
   }
 
   async addTrackToPlaylist(track, playlistName) {
+    let notSent = false;
     if (!track) {
       this.errors.push('Musica deve ser enviada');
-      return;
+      notSent = true;
+    }
+    if (typeof track !== 'object') {
+      this.errors.push('Musica deve ser um objeto');
+      notSent = true;
     }
     if (!playlistName) {
       this.errors.push('Nome da playlist deve ser enviado');
-      return;
+      notSent = true;
     }
+    if (notSent) return;
     await this.getPlaylists();
     const { playlists } = this.playlists;
     if (!this.checkPlaylistExistence(playlistName, playlists)) {
@@ -59,21 +62,47 @@ class Playlists {
   }
 
   async removeTrackFromPlaylist(trackId, playlistName) {
+    let notSent = false;
     if (!trackId) {
       this.errors.push('ID da musica deve ser enviada');
-      return;
+      notSent = true;
+    }
+    if (typeof trackId !== 'string') {
+      this.errors.push('ID da musica deve ser uma string');
+      notSent = true;
     }
     if (!playlistName) {
       this.errors.push('Nome da playlist deve ser enviado');
-      return;
+      notSent = true;
     }
+    if (notSent) return;
     await this.getPlaylists();
     const { playlists } = this.playlists;
     if (!this.checkPlaylistExistence(playlistName, playlists)) {
       this.errors.push('Playlist não encontrada');
     }
     if (this.errors.length > 0) return;
-    // to do 
+
+    const newPlaylists = { ...playlists };
+    const track = this.checkTrackExistence(trackId, playlistName, { ...newPlaylists });
+    if (!track) {
+      this.errors.push('Música não encontrada');
+      return;
+    }
+
+    function removeObjectFromArray(array, key, value) {
+      const resultArray = [...array];
+      array.forEach((obj) => {
+        if (obj[key] === value) {
+          resultArray.splice(array.indexOf(obj), 1);
+        }
+      });
+      return resultArray;
+    }
+
+    newPlaylists[playlistName] = removeObjectFromArray(newPlaylists[playlistName], 'id', trackId);
+
+    await this.saveChanges(newPlaylists);
   }
 
   checkTrackExistence(trackId, playlistName, searchObj) {
@@ -84,7 +113,7 @@ class Playlists {
         // eslint-disable-next-line no-loop-func
         searchObj[keys[i]].forEach((itemTrackPlaylist) => {
           if (itemTrackPlaylist.id === trackId) {
-            existTrack = true;
+            existTrack = itemTrackPlaylist;
           }
         });
       }
