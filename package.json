@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/server.js",
     "build": "sucrase ./src -d ./dist --transforms imports",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "buildAndStart": "sucrase ./src -d ./dist --transforms imports && node dist/server.js"
   },
   "keywords": [],
   "author": "",
