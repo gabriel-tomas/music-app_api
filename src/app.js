@@ -68,6 +68,7 @@ class App {
   }
 
   middleware() {
+    this.app.set('trust proxy', 1);
     this.app.use(allowCredentials);
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
