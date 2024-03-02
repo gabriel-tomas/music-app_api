@@ -30,8 +30,6 @@ const corsOptions = {
     }
   },
   credentials: true,
-  secure: true,
-  httpOnly: false,
 };
 
 class App {
@@ -70,6 +68,13 @@ class App {
   }
 
   middleware() {
+    this.app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      next();
+    });
     this.app.use(cors({
       origin: 'http://localhost:5173',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
