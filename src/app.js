@@ -11,6 +11,8 @@ import helmet from 'helmet';
 
 import { resolve } from 'path';
 
+import allowCredentials from './middlewares/allowCredentials';
+
 import playlistsRoutes from './routes/playlistsRoutes';
 import registerRoutes from './routes/registerRoutes';
 import loginRoutes from './routes/loginRoutes';
@@ -66,6 +68,7 @@ class App {
   }
 
   middleware() {
+    this.app.use(allowCredentials);
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
