@@ -3,12 +3,17 @@ import Playlists from '../models/PlaylistsModel';
 
 class PlaylistsController {
   async index(req, res) {
-    return res.json('OI (PLAYLISTS)');
+    if (!get(req.session, 'user.id', null)) {
+      return res.status(401).json({ notLogged: true, errors: 'ID is required' });
+    }
+    const playlist = new Playlists(get(req.session, 'user.id', null));
+    const allPlaylists = await playlist.getAllPlaylists();
+    return res.json({ playlists: { ...allPlaylists } });
   }
 
   async create(req, res) {
     if (!get(req.session, 'user.id', null)) {
-      return res.status(401).json({ errors: 'ID is required' });
+      return res.status(401).json({ notLogged: true, errors: 'ID is required' });
     }
     const playlist = new Playlists(get(req.session, 'user.id', null));
     await playlist.createPlaylist(req.body);

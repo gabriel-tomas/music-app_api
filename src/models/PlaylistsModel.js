@@ -11,6 +11,13 @@ class Playlists {
     this.body = null;
   }
 
+  async getAllPlaylists() {
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+
+    return playlists;
+  }
+
   async createPlaylist(body) {
     this.body = body;
     this.valid();
