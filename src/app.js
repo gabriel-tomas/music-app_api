@@ -11,8 +11,6 @@ import helmet from 'helmet';
 
 import { resolve } from 'path';
 
-import allowCredentials from './middlewares/allowCredentials';
-
 import playlistsRoutes from './routes/playlistsRoutes';
 import registerRoutes from './routes/registerRoutes';
 import loginRoutes from './routes/loginRoutes';
@@ -71,9 +69,11 @@ class App {
   }
 
   middleware() {
-    this.app.set('trust proxy', 1);
-    this.app.use(allowCredentials);
-    this.app.use(cors(corsOptions));
+    this.app.use(cors({
+      origin: 'http://localhost:5173',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      credentials: true,
+    }));
     this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
