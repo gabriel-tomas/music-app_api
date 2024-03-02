@@ -31,6 +31,8 @@ const corsOptions = {
     }
   },
   credentials: true,
+  secure: true,
+  httpOnly: false,
 };
 
 class App {
