@@ -8,6 +8,7 @@ import MongoStore from 'connect-mongo';
 import express from 'express'; // eslint-disable-line
 import cors from 'cors';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 
 import { resolve } from 'path';
 
@@ -74,6 +75,7 @@ class App {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       credentials: true,
     }));
+    this.app.use(cookieParser('secret'));
     this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
