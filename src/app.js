@@ -18,6 +18,7 @@ import checkLoginRoutes from './routes/checkLoginRoutes';
 
 const whiteList = [
   process.env.WHITE_LIST_MAIN_URL,
+  '*',
 ];
 
 const corsOptions = {
