@@ -7,6 +7,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import express from 'express'; // eslint-disable-line
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 
 import { resolve } from 'path';
@@ -67,6 +68,7 @@ class App {
   }
 
   middleware() {
+    this.app.use(cookieParser());
     this.app.use(cors(corsOptions));
     this.app.use(helmet());
     this.app.use(express.urlencoded({ extended: true }));
