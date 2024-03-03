@@ -62,8 +62,8 @@ class App {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
-        sameSite: 'lax',
-        secure: false,
+        sameSite: 'strict',
+        secure: true,
       },
     });
     this.app.use(sessionOptions);
