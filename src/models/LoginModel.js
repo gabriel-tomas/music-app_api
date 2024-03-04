@@ -20,7 +20,7 @@ class Register {
 
     this.user = await UserModel.findOne({ email: this.body.email });
     if (!this.user) {
-      this.errors.push('Usuário não encontrado');
+      this.errors.push('Usuário não existe');
       this.user = null;
       return;
     }

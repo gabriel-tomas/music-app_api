@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import Register from '../models/RegisterModel';
 
 class RegisterController {
@@ -6,21 +7,16 @@ class RegisterController {
       const register = new Register(req.body);
       await register.create();
       if (register.errors.length > 0) {
-        req.session.save();
-        return res.status(200).json({ loggedIn: false, errors: register.errors });
+        return res.status(400).json({ loggedIn: false, errorsMsg: register.errors });
       }
-      req.session.user = {
-        id: register.user.id,
-        username: register.user.username,
-        email: register.user.email,
-        password: req.body.password.trim(),
-      };
-      req.session.save();
-      return res.json({ loggedIn: true, success: 'Usuário criado com sucesso' });
+      const { id, email } = register.user;
+      const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
+        expiresIn: process.env.TOKEN_EXPIRATION,
+      });
+      return res.json({ token, successMsg: 'Usuário criado com sucesso', user: { name: register.user.username, email: register.user.email } });
     } catch (e) {
-      console.log(e);
       return res.status(401).json({
-        errors: [
+        errorsMsg: [
           'Ocorreu um erro ao tentar se registrar',
         ],
       });
