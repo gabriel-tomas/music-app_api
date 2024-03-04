@@ -9,7 +9,7 @@ export default async (req, res, next) => {
 
   if (!authorization) {
     return res.status(401).json({
-      errors: ['Faça o login'],
+      errorsMsg: ['Faça o login'],
     });
   }
 
@@ -23,7 +23,7 @@ export default async (req, res, next) => {
 
     if (!user) {
       return res.status(401).json({
-        errors: ['Usuáro inválido'],
+        errorsMsg: ['Usuário não existe'],
       });
     }
 
@@ -32,7 +32,7 @@ export default async (req, res, next) => {
     return next();
   } catch (e) {
     return res.status(401).json({
-      errors: ['Faça o login'],
+      errors: ['Faça o login novamente'],
     });
   }
 };
