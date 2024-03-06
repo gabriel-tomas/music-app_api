@@ -14,7 +14,7 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.createPlaylist(req.body);
     if (playlist.errors.length > 0) {
-      return res.status(200).json({ created: false, errors: playlist.errors });
+      return res.status(400).json({ created: false, errors: playlist.errors });
     }
     return res.json({ created: true, success: 'Playlist criada com sucesso' });
   }
@@ -24,7 +24,7 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.deletePlaylist(req.body);
     if (playlist.errors.length > 0) {
-      return res.status(200).json({ deleted: false, errors: playlist.errors });
+      return res.status(400).json({ deleted: false, errors: playlist.errors });
     }
     return res.json({ deleted: true, success: 'Playlist removida com sucesso' });
   }
@@ -34,7 +34,7 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.addTrackToPlaylist(req.body.track, req.body.playlistName);
     if (playlist.errors.length > 0) {
-      return res.status(200).json({ added: false, errors: playlist.errors });
+      return res.status(400).json({ added: false, errors: playlist.errors });
     }
     return res.json({ added: true, success: 'Música adicionada com sucesso' });
   }
@@ -44,7 +44,7 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.removeTrackFromPlaylist(req.body.trackId, req.body.playlistName);
     if (playlist.errors.length > 0) {
-      return res.status(200).json({ removed: false, errors: playlist.errors });
+      return res.status(400).json({ removed: false, errors: playlist.errors });
     }
     return res.json({ removed: true, success: 'Música removida com sucesso' });
   }
