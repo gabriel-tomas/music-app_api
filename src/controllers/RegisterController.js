@@ -7,7 +7,7 @@ class RegisterController {
       const register = new Register(req.body);
       await register.create();
       if (register.errors.length > 0) {
-        return res.status(400).json({ loggedIn: false, errorsMsg: register.errors });
+        return res.status(400).json({ errorsMsg: register.errors });
       }
       const { id, email } = register.user;
       const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
