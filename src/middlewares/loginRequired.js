@@ -32,7 +32,7 @@ export default async (req, res, next) => {
     return next();
   } catch (e) {
     return res.status(401).json({
-      errors: ['Faça o login novamente'],
+      errorsMsg: ['Faça o login novamente'],
     });
   }
 };
