@@ -14,9 +14,9 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.createPlaylist(req.body);
     if (playlist.errors.length > 0) {
-      return res.status(400).json({ created: false, errors: playlist.errors });
+      return res.status(400).json({ created: false, errorsMsg: playlist.errors });
     }
-    return res.json({ created: true, success: 'Playlist criada com sucesso' });
+    return res.json({ created: true, successMsg: 'Playlist criada com sucesso' });
   }
 
   async delete(req, res) {
@@ -24,9 +24,9 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.deletePlaylist(req.body);
     if (playlist.errors.length > 0) {
-      return res.status(400).json({ deleted: false, errors: playlist.errors });
+      return res.status(400).json({ deleted: false, errorsMsg: playlist.errors });
     }
-    return res.json({ deleted: true, success: 'Playlist removida com sucesso' });
+    return res.json({ deleted: true, successMsg: 'Playlist removida com sucesso' });
   }
 
   async add(req, res) {
@@ -34,9 +34,9 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.addTrackToPlaylist(req.body.track, req.body.playlistName);
     if (playlist.errors.length > 0) {
-      return res.status(400).json({ added: false, errors: playlist.errors });
+      return res.status(400).json({ added: false, errorsMsg: playlist.errors });
     }
-    return res.json({ added: true, success: 'Música adicionada com sucesso' });
+    return res.json({ added: true, successMsg: 'Música adicionada com sucesso' });
   }
 
   async remove(req, res) {
@@ -44,9 +44,9 @@ class PlaylistsController {
     const playlist = new Playlists(userId);
     await playlist.removeTrackFromPlaylist(req.body.trackId, req.body.playlistName);
     if (playlist.errors.length > 0) {
-      return res.status(400).json({ removed: false, errors: playlist.errors });
+      return res.status(400).json({ removed: false, errorsMsg: playlist.errors });
     }
-    return res.json({ removed: true, success: 'Música removida com sucesso' });
+    return res.json({ removed: true, successMsg: 'Música removida com sucesso' });
   }
 }
 

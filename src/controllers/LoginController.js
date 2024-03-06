@@ -18,7 +18,7 @@ class LoginController {
       console.log(e);
       return res.status(401).json({
         loggedIn: false,
-        errors: [
+        errorsMsg: [
           'Ocorreu um erro ao tentar se registrar',
         ],
       });
