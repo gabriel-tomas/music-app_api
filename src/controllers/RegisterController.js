@@ -13,7 +13,7 @@ class RegisterController {
       const token = jwt.sign({ id, email }, process.env.TOKEN_SECRET, {
         expiresIn: process.env.TOKEN_EXPIRATION,
       });
-      return res.json({ token, successMsg: 'Usuário criado com sucesso', user: { name: register.user.username, email: register.user.email } });
+      return res.json({ token, successMsg: 'Usuário criado com sucesso', user: { username: register.user.username, email: register.user.email } });
     } catch (e) {
       console.log(e);
       return res.status(500).json({
