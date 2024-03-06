@@ -16,10 +16,9 @@ class LoginController {
       return res.json({ token, successMsg: 'Logado com sucesso', user: { username: login.user.username, email: login.user.email } });
     } catch (e) {
       console.log(e);
-      return res.status(401).json({
-        loggedIn: false,
+      return res.status(500).json({
         errorsMsg: [
-          'Ocorreu um erro ao tentar se registrar',
+          'Ocorreu um erro ao tentar entrar na sua conta',
         ],
       });
     }

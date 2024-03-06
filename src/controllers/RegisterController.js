@@ -15,7 +15,8 @@ class RegisterController {
       });
       return res.json({ token, successMsg: 'Usuário criado com sucesso', user: { name: register.user.username, email: register.user.email } });
     } catch (e) {
-      return res.status(401).json({
+      console.log(e);
+      return res.status(500).json({
         errorsMsg: [
           'Ocorreu um erro ao tentar se registrar',
         ],
