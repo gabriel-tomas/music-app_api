@@ -83,7 +83,7 @@ class Playlists {
 
     const newPlaylists = { ...playlists };
     if (this.checkTrackExistence(track.id, playlistName, { ...newPlaylists })) {
-      this.errors.push('Música já adicionada');
+      this.errors.push('Música já adicionada a essa playlist');
       return;
     }
     newPlaylists[playlistName].push(track);
@@ -120,7 +120,7 @@ class Playlists {
     const newPlaylists = { ...playlists };
     const track = this.checkTrackExistence(trackId, playlistName, { ...newPlaylists });
     if (!track) {
-      this.errors.push('Música não encontrada');
+      this.errors.push('Música não encontrada na playlist');
       return;
     }
 
