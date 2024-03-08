@@ -69,7 +69,7 @@ class Playlists {
       this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
-    if (playlistName !== 'string') {
+    if (typeof playlistName !== 'string') {
       this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
@@ -105,7 +105,7 @@ class Playlists {
       this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
-    if (playlistName !== 'string') {
+    if (typeof playlistName !== 'string') {
       this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
