@@ -58,15 +58,19 @@ class Playlists {
   async addTrackToPlaylist(track, playlistName) {
     let notSent = false;
     if (!track) {
-      this.errors.push('Musica deve ser enviada');
+      this.errors.push('Ocorreu um erro ao tentar acessar a música');
       notSent = true;
     }
     if (typeof track !== 'object') {
-      this.errors.push('Musica deve ser um objeto');
+      this.errors.push('Ocorreu um erro ao tentar acessar a música');
       notSent = true;
     }
     if (!playlistName) {
-      this.errors.push('Nome da playlist deve ser enviado');
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+      notSent = true;
+    }
+    if (playlistName !== 'string') {
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
     if (notSent) return;
@@ -90,15 +94,19 @@ class Playlists {
   async removeTrackFromPlaylist(trackId, playlistName) {
     let notSent = false;
     if (!trackId) {
-      this.errors.push('ID da musica deve ser enviada');
+      this.errors.push('Ocorreu um erro ao tentar acessar a música');
       notSent = true;
     }
     if (typeof trackId !== 'string') {
-      this.errors.push('ID da musica deve ser uma string');
+      this.errors.push('Ocorreu um erro ao tentar acessar a música');
       notSent = true;
     }
     if (!playlistName) {
-      this.errors.push('Nome da playlist deve ser enviado');
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+      notSent = true;
+    }
+    if (playlistName !== 'string') {
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
       notSent = true;
     }
     if (notSent) return;
