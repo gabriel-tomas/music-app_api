@@ -174,7 +174,11 @@ class Playlists {
     let notSent = false;
     if (!this.body.playlistName) {
       notSent = true;
-      this.errors.push('Nome da playlist deve ser enviada');
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+    }
+    if (typeof this.body.playlistName !== 'string') {
+      notSent = true;
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
     }
     if (notSent) return;
     this.cleanUp();
