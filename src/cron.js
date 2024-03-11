@@ -3,10 +3,7 @@ import https from 'https';
 
 const url = process.env.WHITE_LIST_MAIN_URL;
 
-// '*/3 * * * * *'      3s
-// '*/14 * * * *'      14 min
-
-const job = new CronJob('*/3 * * * * *', (() => {
+const job = new CronJob('*/14 * * * *', (() => {
   console.log('');
   console.log('Restarting server...');
 
