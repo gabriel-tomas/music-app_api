@@ -118,19 +118,19 @@ class Playlists {
   async removeTrackFromPlaylist(trackId, playlistName) {
     let notSent = false;
     if (!trackId) {
-      this.errors.push('Ocorreu um erro ao tentar acessar a música');
+      this.errors.push('Ocorreu um erro ao tentar deletar a música');
       notSent = true;
     }
     if (typeof trackId !== 'string') {
-      this.errors.push('Ocorreu um erro ao tentar acessar a música');
+      this.errors.push('Ocorreu um erro ao tentar deletar a música');
       notSent = true;
     }
     if (!playlistName) {
-      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+      this.errors.push('Ocorreu um erro ao tentar deletar a música');
       notSent = true;
     }
     if (typeof playlistName !== 'string') {
-      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+      this.errors.push('Ocorreu um erro ao tentar deletar a música');
       notSent = true;
     }
     if (notSent) return;
