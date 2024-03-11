@@ -6,8 +6,8 @@ import mongoose from 'mongoose';
 import express from 'express'; // eslint-disable-line
 import cors from 'cors';
 import helmet from 'helmet';
-
 import { resolve } from 'path';
+import cronJob from './cron';
 
 import playlistsRoutes from './routes/playlistsRoutes';
 import registerRoutes from './routes/registerRoutes';
@@ -32,6 +32,7 @@ class App {
   constructor() {
     this.app = express();
     this.databaseConnection();
+    cronJob.start();
     this.middleware();
     this.routes();
   }
