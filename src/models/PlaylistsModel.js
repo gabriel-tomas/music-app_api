@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 const PlaylistsSchema = require('./schemas/PlaylistsSchema');
 
 const PlaylistsModel = mongoose.model('playlists', PlaylistsSchema);
@@ -7,6 +8,7 @@ class Playlists {
   constructor(id) {
     this.id = id;
     this.playlists = null;
+    this.playlist = null;
     this.errors = [];
     this.body = null;
   }
@@ -16,6 +18,28 @@ class Playlists {
     const { playlists } = this.playlists;
 
     return playlists;
+  }
+
+  async getPlaylist(playlistName) {
+    if (!playlistName) {
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+    }
+    if (typeof playlistName !== 'string') {
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+    }
+    if (this.errors.length > 0) return;
+
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+
+    const playlist = _.get(playlists, `${playlistName}`, null);
+
+    if (!playlist) {
+      this.errors.push('A playlist não existe');
+      return;
+    }
+
+    this.playlist = playlist;
   }
 
   async createPlaylist(body) {

@@ -18,6 +18,26 @@ class PlaylistsController {
     }
   }
 
+  async show(req, res) {
+    try {
+      const playlistName = get(req, 'params.name', '');
+      const { userId } = req;
+      const playlist = new Playlists(userId);
+      await playlist.getPlaylist(playlistName);
+      if (playlist.errors.length > 0) {
+        return res.status(400).json({ errorsMsg: playlist.errors });
+      }
+      return res.json({ playlist: playlist.playlist });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+        errorsMsg: [
+          'Ocorreu um erro ao tentar carregar as playlists',
+        ],
+      });
+    }
+  }
+
   async create(req, res) {
     try {
       const { userId } = req;

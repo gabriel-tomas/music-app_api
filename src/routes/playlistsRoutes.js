@@ -6,6 +6,7 @@ import loginRequired from '../middlewares/loginRequired';
 import playlistsController from '../controllers/PlaylistsController';
 
 router.get('/', loginRequired, playlistsController.index);
+router.get('/:name', loginRequired, playlistsController.show);
 router.post('/create', loginRequired, playlistsController.create);
 router.post('/delete', loginRequired, playlistsController.delete);
 router.post('/add', loginRequired, playlistsController.add);
