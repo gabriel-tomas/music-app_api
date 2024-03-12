@@ -1,7 +1,7 @@
 import { CronJob } from 'cron';
 import https from 'https';
 
-const url = process.env.WHITE_LIST_MAIN_URL;
+const url = process.env.API_URL;
 
 const job = new CronJob('*/14 * * * *', (() => {
   console.log('');
