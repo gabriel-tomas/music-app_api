@@ -194,12 +194,11 @@ class Playlists {
   }
 
   async saveChanges(newObject) {
-    const savedPlaylists = await PlaylistsModel.findOneAndUpdate(
+    await PlaylistsModel.findOneAndUpdate(
       { user_id: this.id },
       { playlists: { ...newObject } },
       { new: true },
     );
-    console.log(savedPlaylists);
   }
 
   valid() {
