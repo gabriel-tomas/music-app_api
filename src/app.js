@@ -12,6 +12,7 @@ import { resolve } from 'path';
 import playlistsRoutes from './routes/playlistsRoutes';
 import registerRoutes from './routes/registerRoutes';
 import loginRoutes from './routes/loginRoutes';
+import userRoutes from './routes/userRoutes';
 
 const whiteList = [
   process.env.WHITE_LIST_MAIN_URL,
@@ -60,6 +61,7 @@ class App {
     this.app.use('/register', registerRoutes);
     this.app.use('/login', loginRoutes);
     this.app.use('/playlists', playlistsRoutes);
+    this.app.use('/user', userRoutes);
   }
 }
 
