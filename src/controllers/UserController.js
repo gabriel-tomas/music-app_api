@@ -42,7 +42,7 @@ class UserController {
       const user = new User(userId);
       await user.delete();
       if (user.errors.length > 0) {
-        return res.status(400).json({ errorsMsg: user.errors });
+        return res.status(401).json({ errorsMsg: user.errors });
       }
       return res.json({ successMsg: 'user deleted' });
     } catch (e) {
