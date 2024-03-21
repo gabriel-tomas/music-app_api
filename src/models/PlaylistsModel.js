@@ -79,6 +79,38 @@ class Playlists {
     await this.saveChanges({ ...newPlaylists });
   }
 
+  async editPlaylist(playlistName, newPlaylistName) {
+    if (!playlistName || typeof playlistName !== 'string') {
+      this.errors.push('Ocorreu um erro ao tentar acessar a playlist');
+      return;
+    }
+
+    this.body = { playlistName: newPlaylistName };
+    this.valid();
+    if (this.errors.length > 0) return;
+
+    await this.getPlaylists();
+    const { playlists } = this.playlists;
+
+    const newPlaylists = { ...playlists };
+    if (!this.checkPlaylistExistence(playlistName, { ...newPlaylists })) {
+      this.errors.push('Playlist não existe');
+      return;
+    }
+
+    if (playlistName !== this.body.playlistName) {
+      Object.defineProperty(
+        newPlaylists,
+        this.body.playlistName,
+        Object.getOwnPropertyDescriptor(newPlaylists, playlistName),
+      );
+      delete newPlaylists[playlistName];
+    }
+
+    console.log(newPlaylists);
+    await this.saveChanges({ ...newPlaylists });
+  }
+
   async addTrackToPlaylist(track, playlistName) {
     let notSent = false;
     if (!track) {
