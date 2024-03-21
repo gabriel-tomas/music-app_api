@@ -113,6 +113,25 @@ class PlaylistsController {
       });
     }
   }
+
+  async edit(req, res) {
+    try {
+      const { userId } = req;
+      const playlist = new Playlists(userId);
+      await playlist.editPlaylist(req.body.playlistName, req.body.newPlaylistName);
+      if (playlist.errors.length > 0) {
+        return res.status(400).json({ errorsMsg: playlist.errors });
+      }
+      return res.json({ successMsg: 'Música renomeada com sucesso' });
+    } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+        errorsMsg: [
+          'Ocorreu um erro ao tentar renomear a playlist',
+        ],
+      });
+    }
+  }
 }
 
 export default new PlaylistsController();
