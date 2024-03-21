@@ -107,7 +107,6 @@ class Playlists {
       delete newPlaylists[playlistName];
     }
 
-    console.log(newPlaylists);
     await this.saveChanges({ ...newPlaylists });
   }
 
