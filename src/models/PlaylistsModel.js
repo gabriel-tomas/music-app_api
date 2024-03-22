@@ -97,6 +97,10 @@ class Playlists {
       this.errors.push('Playlist não existe');
       return;
     }
+    if (this.checkPlaylistExistence(this.body.playlistName, { ...newPlaylists })) {
+      this.errors.push('Nome de playlist já existe');
+      return;
+    }
 
     if (playlistName !== this.body.playlistName) {
       Object.defineProperty(
