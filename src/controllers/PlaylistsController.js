@@ -118,11 +118,11 @@ class PlaylistsController {
     try {
       const { userId } = req;
       const playlist = new Playlists(userId);
-      await playlist.editPlaylist(req.body.playlistName, req.body.newPlaylistName);
+      await playlist.editPlaylist(get(req, 'body.playlistName', ''), get(req, 'body.newPlaylistName', ''));
       if (playlist.errors.length > 0) {
         return res.status(400).json({ errorsMsg: playlist.errors });
       }
-      return res.json({ successMsg: 'Música renomeada com sucesso' });
+      return res.json({ successMsg: 'Playlist renomeada com sucesso' });
     } catch (e) {
       console.log(e);
       return res.status(500).json({
