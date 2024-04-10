@@ -7,6 +7,32 @@ A autenticação dos usuários é feito por meio de JWTs, esse JWT é guardado n
 
 O projeto usa o MongoDB no banco de dados para armazenar os usuários e playlists.
 
+## Para rodar o projeto localmente
+- Clone o repositório
+```shell
+git clone https://github.com/gabriel-tomas/music-app_api.git
+```
+Vá para a pasta onde o projeto foi clonado
+
+- Crie um .env na pasta raiz do projeto com as seguintes variáveis:
+```shell
+APP_PORT="porta_do_projeto"
+CONNECTIONSTRING="connection_string_mongo_db"
+TOKEN_EXPIRATION="1d" # 1d === 1 dia
+TOKEN_SECRET="token_secret"
+WHITE_LIST_MAIN_URL="site_white_list" # site enabled by cors
+```
+A connection string pode ser obtida seguindo esse guia: https://www.mongodb.com/basics/mongodb-connection-string
+
+- Instale os pacotes:
+```shell
+npm i
+```
+- Execute o server:
+```shell
+ npm run dev
+```
+
 ## Rotas
 
 🟨 = rota fechada, necessário token
